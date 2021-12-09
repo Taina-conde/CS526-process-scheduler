@@ -2,9 +2,11 @@ import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
 import java.io.IOException;
+
 class ProcessScheduling {
-    /**
-     *
+    /** readProcess reads the input file that stores information about all processes. It creates Process instances
+     * for each process from the file and add them to an ArrayList.
+     * @return D returns the ArrayList of processes created from the input file.
      * */
     private static ArrayList readProcesses() throws IOException {
         ArrayList D = new ArrayList();
