@@ -163,6 +163,7 @@ class ProcessScheduling {
         //At this time all processes in D have been moved to Q
         //execute all processes that are still in Q, one at a time
         while (!Q.isEmpty()) {
+
             //check if a process just finished running
             if (running && executingDuration == 0) {
                 // set running back to false, the process that was running just reached the duration of its execution
@@ -181,6 +182,7 @@ class ProcessScheduling {
 
             }
 
+
                 // increment currTime in each iteration
             currTime++;
             // if there is a process running, decrement the executingDuration
@@ -189,8 +191,12 @@ class ProcessScheduling {
                 executingDuration--;
             }
         }
+        if(executingDuration!= 0) {
+            currTime += executingDuration;
+            completeExecution(currTime,executingProcess, Q);
+        }
         double averageWaitTime = totalWaitTime/numProcesses;
-        System.out.println("Total wait time = " + totalWaitTime);
+        System.out.println("\nTotal wait time = " + totalWaitTime);
         System.out.println("Average wait time = " + averageWaitTime);
 
 
