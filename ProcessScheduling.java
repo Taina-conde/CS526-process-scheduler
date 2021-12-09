@@ -100,6 +100,8 @@ class ProcessScheduling {
     public static void main(String[] args) throws IOException {
         //Read all processes from an input file and store them in an ArrayList, D
         ArrayList<Process> D = readProcesses();
+        // initial number of processes
+        int numProcesses = D.size();
         // initialize current time
         int currTime = 0;
         //set running initially to false
@@ -178,7 +180,7 @@ class ProcessScheduling {
                 running = true;
 
             }
-            
+
                 // increment currTime in each iteration
             currTime++;
             // if there is a process running, decrement the executingDuration
@@ -187,7 +189,9 @@ class ProcessScheduling {
                 executingDuration--;
             }
         }
-
+        double averageWaitTime = totalWaitTime/numProcesses;
+        System.out.println("Total wait time = " + totalWaitTime);
+        System.out.println("Average wait time = " + averageWaitTime);
 
 
 
