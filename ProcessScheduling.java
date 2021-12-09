@@ -49,12 +49,24 @@ class ProcessScheduling {
         PriorityQueue<Process> Q = new PriorityQueue<>( new ProcessComparator());
 
         // Each iteration of the while loop represents what occurs during one time unit
+
         while(!D.isEmpty()) {
-            for (Process process: D) {
-                if (process.getArrivalTime() == currTime) {
-                    Q.add(process);
+            // look in all processes stored in D
+            for (int i = 0; i < D.size(); i++) {
+                // if the arrivalTime of that process is less than or equal to current time, remove that
+                //process from D, and insert it into the PriorityQueue
+                //That simulates the arrival of a new process at the system
+                if (D.get(i).getArrivalTime() <= currTime) {
+                    Process next = D.remove(i);
+                    Q.add(next);
                 }
             }
+//            System.out.println("time: " + currTime);
+//            System.out.println("D: " + D);
+//            System.out.println("Q : " + Q);
+
+
+
 
             // increment currTime in each iteration
             currTime++;
