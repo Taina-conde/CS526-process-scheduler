@@ -12,7 +12,7 @@ class ProcessScheduling {
     private static ArrayList readProcesses() throws IOException {
         ArrayList D = new ArrayList();
         // read input file and store all process Objects in the D
-        File myFile = new File("process_scheduling_input.txt");
+        File myFile = new File("proces_scheduling_input.txt");
         Scanner myReader = new Scanner(myFile);
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
@@ -32,9 +32,17 @@ class ProcessScheduling {
         return D;
 
     }
-    public static void main(String[] args) {
+
+    /** Simulates a simplified version of a process scheduler of a computer system.
+     * @throws IOException if it cannot find the process_scheduling_input.txt file. The exception comes from calling
+     * readProcesses method.
+     * */
+    public static void main(String[] args) throws IOException {
         //Read all processes from an input file and store them in an ArrayList, D
         ArrayList D = readProcesses();
+
+
+
         // initialize currentTime
         //set running initially to false
         // create an empty priority queue Q
