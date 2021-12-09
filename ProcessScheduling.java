@@ -41,15 +41,25 @@ class ProcessScheduling {
     public static void main(String[] args) throws IOException {
         //Read all processes from an input file and store them in an ArrayList, D
         ArrayList<Process> D = readProcesses();
-        // initialize currentTime
+        // initialize current time
         int currTime = 0;
         //set running initially to false
         boolean running = false;
-        // create an empty priority queue Q
-        PriorityQueue<Process> Q = new PriorityQueue<>();
-        
+        // PriorityQueue Q with the initial capacity of 10 that orders its elements according to the comparator.
+        PriorityQueue<Process> Q = new PriorityQueue<>(10);
+
         // Each iteration of the while loop represents what occurs during one time unit
-        // Must increment currentTime in each iteration
+        while(!D.isEmpty()) {
+            for (Process process: D) {
+                if (process.getArrivalTime() == currTime) {
+                    Q.add(process);
+                }
+            }
+
+            // increment currTime in each iteration
+            currTime++;
+        }
+
 
 
     }
