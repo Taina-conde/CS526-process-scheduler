@@ -50,7 +50,7 @@ class ProcessScheduling {
         Process executingProcess = null;
         // maximum wait time and total wait time
         int maxWait = 30;
-        int totalWaitTime = 0;
+        double totalWaitTime = 0;
         // PriorityQueue Q that orders its elements according to the comparator (lowest priority).
         PriorityQueue<Process> Q = new PriorityQueue<>( new ProcessComparator());
 
@@ -67,26 +67,11 @@ class ProcessScheduling {
                     Q.add(next);
                 }
             }
-            if (!Q.isEmpty() && !running) {
-                executingProcess = Q.poll();
-                int waitTime = currTime - executingProcess.getArrivalTime();
-                totalWaitTime += waitTime;
-                System.out.println("Process removed from queue is: id = "
-                        + executingProcess.getProcessId() +
-                        " , at time "
-                        + currTime +
-                        " , wait time = "
-                        + waitTime +
-                        " Total wait time = "
-                        + totalWaitTime
-                );
 
-                executingDuration = executingProcess.getDuration();
-                running = true;
-
-            }
-            System.out.println("executing time : " + executingDuration);
+            //check if a process just finished running
             if (running && executingDuration == 0) {
+                // set running back to false, the process that was running just reached the duration of its execution
+                //and finished
                 running = false;
                 System.out.println("Process "
                         + executingProcess.getProcessId() +
@@ -104,7 +89,7 @@ class ProcessScheduling {
                                 " , wait time = "
                                 + waitTime +
                                 " , current priority = "
-                                + process.getPriority() 
+                                + process.getPriority()
 
                         );
                         process.setPriority(process.getPriority() - 1);
@@ -117,9 +102,31 @@ class ProcessScheduling {
                     }
                 }
             }
+            // if no process is running and there still processes waiting in the queue,
+            // run the next process with the smallest priority
+            if (!Q.isEmpty() && !running) {
+                executingProcess = Q.poll();
+                int waitTime = currTime - executingProcess.getArrivalTime();
+                totalWaitTime += waitTime;
+                System.out.println("Process removed from queue is: id = "
+                        + executingProcess.getProcessId() +
+                        " , at time "
+                        + currTime +
+                        " , wait time = "
+                        + waitTime +
+                        " Total wait time = "
+                        + totalWaitTime
+                );
+                // set the executingDuration variable to mark the duration of the process that is now running
+                executingDuration = executingProcess.getDuration();
+                running = true;
+
+            }
 
             // increment currTime in each iteration
             currTime++;
+            // if there is a process running, decrement the executingDuration
+            // when this variable is 0, no process is running or one process just finished running
             if(executingDuration != 0) {
                 executingDuration--;
             }
