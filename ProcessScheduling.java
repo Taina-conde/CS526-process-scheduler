@@ -73,7 +73,26 @@ class ProcessScheduling {
         }
 
     }
-
+    private static void printExecutingMessages(int currTime, int waitTime, double totalWaitTime, Process executingProcess) {
+        System.out.println("Process removed from queue is: id = "
+                + executingProcess.getProcessId() +
+                " , at time "
+                + currTime +
+                " , wait time = "
+                + waitTime +
+                " Total wait time = "
+                + totalWaitTime
+        );
+        System.out.println("Process id = "
+                + executingProcess.getProcessId() +
+                "\n\t\tPriority = "
+                + executingProcess.getPriority() +
+                "\n\t\tArrival = "
+                + executingProcess.getArrivalTime() +
+                "\n\t\tDuration =  "
+                + executingProcess.getDuration()
+        );
+    }
     /** Simulates a simplified version of a process scheduler of a computer system.
      * @throws IOException if it cannot find the process_scheduling_input.txt file. The exception comes from calling
      * readProcesses method.
@@ -121,24 +140,7 @@ class ProcessScheduling {
                 executingProcess = Q.poll();
                 int waitTime = currTime - executingProcess.getArrivalTime();
                 totalWaitTime += waitTime;
-                System.out.println("Process removed from queue is: id = "
-                        + executingProcess.getProcessId() +
-                        " , at time "
-                        + currTime +
-                        " , wait time = "
-                        + waitTime +
-                        " Total wait time = "
-                        + totalWaitTime
-                );
-                System.out.println("Process id = "
-                        + executingProcess.getProcessId() +
-                        "\n\t\tPriority = "
-                        + executingProcess.getPriority() +
-                        "\n\t\tArrival = "
-                        + executingProcess.getArrivalTime() +
-                        "\n\t\tDuration =  "
-                        + executingProcess.getDuration()
-                );
+                printExecutingMessages(currTime, waitTime, totalWaitTime, executingProcess);
 
                 // set the executingDuration variable to mark the duration of the process that is now running
                 executingDuration = executingProcess.getDuration();
@@ -166,12 +168,17 @@ class ProcessScheduling {
                 running = false;
                 completeExecution(currTime, executingProcess, Q );
             }
+            if (!running) {
+                executingProcess = Q.poll();
+                int waitTime = currTime - executingProcess.getArrivalTime();
+                totalWaitTime += waitTime;
+                printExecutingMessages(currTime, waitTime, totalWaitTime, executingProcess);
+                // set the executingDuration variable to mark the duration of the process that is now running
+                executingDuration = executingProcess.getDuration();
+                running = true;
+
+            }
             
-
-
-
-
-
                 // increment currTime in each iteration
             currTime++;
             // if there is a process running, decrement the executingDuration
