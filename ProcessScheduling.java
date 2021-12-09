@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.io.File;
 import java.util.Scanner;
 import java.io.IOException;
@@ -40,7 +41,11 @@ class ProcessScheduling {
     public static void main(String[] args) throws IOException {
         //Read all processes from an input file and store them in an ArrayList, D
         ArrayList<Process> D = readProcesses();
-        //
+        //create an empty priority queue Q
+        PriorityQueue<Process> Q = new PriorityQueue<>();
+        
+
+
 
 
 
