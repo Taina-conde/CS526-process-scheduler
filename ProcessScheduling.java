@@ -7,6 +7,7 @@ class ProcessScheduling {
     /** readProcess reads the input file that stores information about all processes. It creates Process instances
      * for each process from the file and add them to an ArrayList.
      * @return D returns the ArrayList of processes created from the input file.
+     * @throws IOException the method throws an exception if it cannot find the process_scheduling_input.txt file.
      * */
     private static ArrayList readProcesses() throws IOException {
         ArrayList D = new ArrayList();
@@ -32,7 +33,8 @@ class ProcessScheduling {
 
     }
     public static void main(String[] args) {
-        //Read all processes from an input file and store them in an appropriate data structure, D
+        //Read all processes from an input file and store them in an ArrayList, D
+        ArrayList D = readProcesses();
         // initialize currentTime
         //set running initially to false
         // create an empty priority queue Q
