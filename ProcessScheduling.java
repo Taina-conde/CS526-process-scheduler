@@ -45,6 +45,8 @@ class ProcessScheduling {
         int currTime = 0;
         //set running initially to false
         boolean running = false;
+        // executingDuration helps determine the time a process will keep executing
+        int executingDuration = 0;
         // maximum wait time and total wait time
         int maxWait = 30;
         int totalWaitTime = 0;
@@ -65,21 +67,36 @@ class ProcessScheduling {
                 }
             }
             if (!Q.isEmpty() && !running) {
-                Process executedProcess = Q.poll();
-                int waitTime = currTime - executedProcess.getArrivalTime();
+                Process executingProcess = Q.poll();
+                int waitTime = currTime - executingProcess.getArrivalTime();
+                executingDuration = executingProcess.getDuration();
                 running = true;
                 totalWaitTime += waitTime;
-
             }
-//            System.out.println("time: " + currTime);
-//            System.out.println("D: " + D);
-//            System.out.println("Q : " + Q);
+            System.out.println("executing time : " + executingDuration);
+            if (running && executingDuration == 0) {
+                running = false;
+                // Update priorities of processes that have been waiting longer than max. wait time
+                for (Process process: Q) {
+                    int waitTime = currTime - process.getArrivalTime();
+                    if (waitTime > maxWait) {
+                        process.setPriority(process.getPriority() - 1);
+                    }
+                }
+            }
+
+            System.out.println("time: " + currTime);
+            System.out.println("D: " + D);
+            System.out.println("Q : " + Q);
 
 
 
 
             // increment currTime in each iteration
             currTime++;
+            if(executingDuration != 0) {
+                executingDuration--;
+            }
         }
 
 
