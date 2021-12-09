@@ -122,6 +122,7 @@ class ProcessScheduling {
                 running = true;
 
             }
+            if(D.isEmpty()) System.out.println("\nD becomes empty at time " + currTime + "\n");
 
             // increment currTime in each iteration
             currTime++;
@@ -131,6 +132,7 @@ class ProcessScheduling {
                 executingDuration--;
             }
         }
+
 
 
 
