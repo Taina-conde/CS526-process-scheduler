@@ -117,6 +117,16 @@ class ProcessScheduling {
                         " Total wait time = "
                         + totalWaitTime
                 );
+                System.out.println("Process id = "
+                        + executingProcess.getProcessId() +
+                        "\n\t\tPriority = "
+                        + executingProcess.getPriority() +
+                        "\n\t\tArrival = "
+                        + executingProcess.getArrivalTime() +
+                        "\n\t\tDuration =  "
+                        + executingProcess.getDuration()
+                );
+
                 // set the executingDuration variable to mark the duration of the process that is now running
                 executingDuration = executingProcess.getDuration();
                 running = true;
