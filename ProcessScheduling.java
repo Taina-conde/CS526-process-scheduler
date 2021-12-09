@@ -65,15 +65,14 @@ class ProcessScheduling {
                 System.out.println("PID = "
                         + process.getProcessId() +
                         " , new priority = "
-                        + process.getPriority() +
-                        "\n"
+                        + process.getPriority() 
                 );
             }
         }
 
     }
     private static void printExecutingMessages(int currTime, int waitTime, double totalWaitTime, Process executingProcess) {
-        System.out.println("Process removed from queue is: id = "
+        System.out.println("\nProcess removed from queue is: id = "
                 + executingProcess.getProcessId() +
                 " , at time "
                 + currTime +
@@ -120,7 +119,7 @@ class ProcessScheduling {
             System.out.println(p);
         }
         //print maximum wait time
-        System.out.println("Maximum wait time = " + maxWait);
+        System.out.println("\nMaximum wait time = " + maxWait);
         // Each iteration of the while loop represents what occurs during one time unit
         while(!D.isEmpty()) {
             // look in all processes stored in D
