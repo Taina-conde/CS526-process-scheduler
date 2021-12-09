@@ -33,6 +33,37 @@ class ProcessScheduling {
         return D;
 
     }
+    private static void completeExecution(int currTime, int maxWait,  Process executingProcess, PriorityQueue<Process> Q) {
+        System.out.println("Process "
+                + executingProcess.getProcessId() +
+                " finished at time "
+                + currTime +
+                "\n"
+        );
+        // Update priorities of processes that have been waiting longer than max. wait time
+        System.out.println("Update priority: ");
+        for (Process process: Q) {
+            int waitTime = currTime - process.getArrivalTime();
+            if (waitTime > maxWait) {
+                System.out.println("PID = "
+                        + process.getProcessId() +
+                        " , wait time = "
+                        + waitTime +
+                        " , current priority = "
+                        + process.getPriority()
+
+                );
+                process.setPriority(process.getPriority() - 1);
+                System.out.println("PID = "
+                        + process.getProcessId() +
+                        " , new priority = "
+                        + process.getPriority() +
+                        "\n"
+                );
+            }
+        }
+
+    }
 
     /** Simulates a simplified version of a process scheduler of a computer system.
      * @throws IOException if it cannot find the process_scheduling_input.txt file. The exception comes from calling
@@ -73,34 +104,8 @@ class ProcessScheduling {
                 // set running back to false, the process that was running just reached the duration of its execution
                 //and finished
                 running = false;
-                System.out.println("Process "
-                        + executingProcess.getProcessId() +
-                        " finished at time "
-                        + currTime +
-                        "\n"
-                        );
-                // Update priorities of processes that have been waiting longer than max. wait time
-                System.out.println("Update priority: ");
-                for (Process process: Q) {
-                    int waitTime = currTime - process.getArrivalTime();
-                    if (waitTime > maxWait) {
-                        System.out.println("PID = "
-                                + process.getProcessId() +
-                                " , wait time = "
-                                + waitTime +
-                                " , current priority = "
-                                + process.getPriority()
+                completeExecution(currTime, maxWait, executingProcess, Q);
 
-                        );
-                        process.setPriority(process.getPriority() - 1);
-                        System.out.println("PID = "
-                                + process.getProcessId() +
-                                " , new priority = "
-                                + process.getPriority() +
-                                "\n"
-                        );
-                    }
-                }
             }
             // if no process is running and there still processes waiting in the queue,
             // run the next process with the smallest priority
@@ -145,7 +150,20 @@ class ProcessScheduling {
         //At this time all processes in D have been moved to Q
         //execute all processes that are still in Q, one at a time
         while (!Q.isEmpty()) {
+            if (running && executingDuration == 0) {
 
+            }
+
+
+
+
+                // increment currTime in each iteration
+            currTime++;
+            // if there is a process running, decrement the executingDuration
+            // when this variable is 0, no process is running or one process just finished running
+            if(executingDuration != 0) {
+                executingDuration--;
+            }
         }
 
 
