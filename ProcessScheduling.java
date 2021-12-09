@@ -45,8 +45,8 @@ class ProcessScheduling {
         int currTime = 0;
         //set running initially to false
         boolean running = false;
-        // PriorityQueue Q with the initial capacity of 10 that orders its elements according to the comparator.
-        PriorityQueue<Process> Q = new PriorityQueue<>(10);
+        // PriorityQueue Q that orders its elements according to the comparator (lowest priority).
+        PriorityQueue<Process> Q = new PriorityQueue<>( new ProcessComparator());
 
         // Each iteration of the while loop represents what occurs during one time unit
         while(!D.isEmpty()) {
