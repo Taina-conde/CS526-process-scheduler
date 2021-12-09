@@ -45,6 +45,9 @@ class ProcessScheduling {
         int currTime = 0;
         //set running initially to false
         boolean running = false;
+        // maximum wait time and total wait time
+        int maxWait = 30;
+        int totalWaitTime = 0;
         // PriorityQueue Q that orders its elements according to the comparator (lowest priority).
         PriorityQueue<Process> Q = new PriorityQueue<>( new ProcessComparator());
 
@@ -60,6 +63,13 @@ class ProcessScheduling {
                     Process next = D.remove(i);
                     Q.add(next);
                 }
+            }
+            if (!Q.isEmpty() && !running) {
+                Process executedProcess = Q.poll();
+                int waitTime = currTime - executedProcess.getArrivalTime();
+                running = true;
+                totalWaitTime += waitTime;
+
             }
 //            System.out.println("time: " + currTime);
 //            System.out.println("D: " + D);
