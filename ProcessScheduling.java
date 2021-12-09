@@ -142,6 +142,11 @@ class ProcessScheduling {
                 executingDuration--;
             }
         }
+        //At this time all processes in D have been moved to Q
+        //execute all processes that are still in Q, one at a time
+        while (!Q.isEmpty()) {
+
+        }
 
 
 
