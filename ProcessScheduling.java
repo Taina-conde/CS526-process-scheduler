@@ -36,13 +36,12 @@ class ProcessScheduling {
     /** completeExecution prints a message about the completed process and updates the priorities of processes that
      * have been waiting longer than a max wait time.
      * @param currTime the integer that represents the current time.
+     * @param maxWait maximum wait time a process can wait before its priority gets updated.
      * @param executingProcess the Process that is currently running, or just finished running.
      * @param Q the PriorityQueue that stores the processes that arrived at the system and are waiting to run according
      *          to their priority.
      * */
-    private static void completeExecution(int currTime,  Process executingProcess, PriorityQueue<Process> Q) {
-        // maximum wait time a process can wait before its priority gets updated.
-        int maxWait = 30;
+    private static void completeExecution(int currTime, int maxWait, Process executingProcess, PriorityQueue<Process> Q) {
         System.out.println("Process "
                 + executingProcess.getProcessId() +
                 " finished at time "
@@ -104,18 +103,25 @@ class ProcessScheduling {
         int numProcesses = D.size();
         // initialize current time
         int currTime = 0;
+        //maximum wait time
+        int maxWait = 30;
         //set running initially to false
         boolean running = false;
         // executingDuration helps determine the time a process will keep executing
         int executingDuration = 0;
-        Process executingProcess = null;
+        Process executingProcess = new Process();
         // total wait time of all processes
         double totalWaitTime = 0;
         // PriorityQueue Q that orders its elements according to the comparator (lowest priority).
         PriorityQueue<Process> Q = new PriorityQueue<>( new ProcessComparator());
 
+        //First, print all processes
+        for (Process p: D) {
+            System.out.println(p);
+        }
+        //print maximum wait time
+        System.out.println("Maximum wait time = " + maxWait);
         // Each iteration of the while loop represents what occurs during one time unit
-
         while(!D.isEmpty()) {
             // look in all processes stored in D
             for (int i = 0; i < D.size(); i++) {
@@ -133,7 +139,7 @@ class ProcessScheduling {
                 // set running back to false, the process that was running just reached the duration of its execution
                 //and finished
                 running = false;
-                completeExecution(currTime, executingProcess, Q);
+                completeExecution(currTime, maxWait, executingProcess, Q);
 
             }
             // if no process is running and there still processes waiting in the queue,
@@ -169,7 +175,7 @@ class ProcessScheduling {
                 // set running back to false, the process that was running just reached the duration of its execution
                 //and finished
                 running = false;
-                completeExecution(currTime, executingProcess, Q );
+                completeExecution(currTime,maxWait, executingProcess, Q );
             }
             if (!running) {
                 executingProcess = Q.poll();
@@ -191,9 +197,10 @@ class ProcessScheduling {
                 executingDuration--;
             }
         }
+        //if there is a process running, add the remaining time of execution to currTime and complete the last process.
         if(executingDuration!= 0) {
             currTime += executingDuration;
-            completeExecution(currTime,executingProcess, Q);
+            completeExecution(currTime, maxWait, executingProcess, Q);
         }
         double averageWaitTime = totalWaitTime/numProcesses;
         System.out.println("\nTotal wait time = " + totalWaitTime);

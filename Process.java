@@ -1,11 +1,15 @@
 public class Process {
 
-    private int id;
-    private int duration;
-    private int arrivalTime;
+    private final int id;
+    private final int duration;
+    private final int arrivalTime;
     private int priority;
 
     public Process() {
+        this.id = 0;
+        this.priority = 0;
+        this.duration = 0;
+        this.arrivalTime = 0;
     }
 
     public Process(int id, int priority, int duration, int arrivalTime) {
@@ -20,25 +24,16 @@ public class Process {
     public int getDuration() { return duration; }
     public int getArrivalTime() { return arrivalTime; }
     //setters
-    public void setProcessId(int id) {
-        this.id = id ;
-    }
+
     public void setPriority(int priority){
         this.priority = priority;
     }
-    public void setDuration(int duration){
-        this.duration = duration;
-    }
-    public void setArrivalTime(int arrivalTime){
-        this.arrivalTime = arrivalTime;
-    }
+
 
     public String toString() {
-        String c =
-                "Id = " + id + ", priority = " + priority + ", duration = " + duration
+        return "Id = " + id + ", priority = " + priority + ", duration = " + duration
                         + ", arrival time = " + arrivalTime;
 
-        return c;
     }
 
 
