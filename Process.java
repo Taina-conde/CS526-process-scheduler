@@ -1,4 +1,4 @@
-public class Process {
+public class Process implements Comparable {
 
     private int id;
     private int duration;
@@ -32,7 +32,7 @@ public class Process {
     public void setArrivalTime(int arrivalTime){
         this.arrivalTime = arrivalTime;
     }
-
+    
     public String toString() {
         String c =
                 "Id = " + id + ", priority = " + priority + ", duration = " + duration
@@ -41,4 +41,11 @@ public class Process {
         return c;
     }
 
+    @Override
+    public int compareTo(Object otherProcess) {
+        int otherPriority=((Process)otherProcess).getPriority();
+        // Ascending order of priorities
+        return this.priority - otherPriority;
+
+    }
 }
