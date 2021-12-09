@@ -9,10 +9,10 @@ class ProcessScheduling {
      * @return D returns the ArrayList of processes created from the input file.
      * @throws IOException the method throws an exception if it cannot find the process_scheduling_input.txt file.
      * */
-    private static ArrayList readProcesses() throws IOException {
-        ArrayList D = new ArrayList();
+    private static ArrayList<Process> readProcesses() throws IOException {
+        ArrayList<Process> D = new ArrayList<>();
         // read input file and store all process Objects in the D
-        File myFile = new File("proces_scheduling_input.txt");
+        File myFile = new File("process_scheduling_input.txt");
         Scanner myReader = new Scanner(myFile);
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
@@ -39,7 +39,8 @@ class ProcessScheduling {
      * */
     public static void main(String[] args) throws IOException {
         //Read all processes from an input file and store them in an ArrayList, D
-        ArrayList D = readProcesses();
+        ArrayList<Process> D = readProcesses();
+        //
 
 
 
