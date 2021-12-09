@@ -99,24 +99,24 @@ class ProcessScheduling {
                 for (Process process: Q) {
                     int waitTime = currTime - process.getArrivalTime();
                     if (waitTime > maxWait) {
-                        process.setPriority(process.getPriority() - 1);
                         System.out.println("PID = "
                                 + process.getProcessId() +
                                 " , wait time = "
                                 + waitTime +
                                 " , current priority = "
-                                + process.getPriority()
+                                + process.getPriority() 
+
+                        );
+                        process.setPriority(process.getPriority() - 1);
+                        System.out.println("PID = "
+                                + process.getProcessId() +
+                                " , new priority = "
+                                + process.getPriority() +
+                                "\n"
                         );
                     }
                 }
             }
-
-            System.out.println("time: " + currTime);
-            System.out.println("D: " + D);
-            System.out.println("Q : " + Q);
-
-
-
 
             // increment currTime in each iteration
             currTime++;
