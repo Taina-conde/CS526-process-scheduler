@@ -33,7 +33,16 @@ class ProcessScheduling {
         return D;
 
     }
-    private static void completeExecution(int currTime, int maxWait,  Process executingProcess, PriorityQueue<Process> Q) {
+    /** completeExecution prints a message about the completed process and updates the priorities of processes that
+     * have been waiting longer than a max wait time.
+     * @param currTime the integer that represents the current time.
+     * @param executingProcess the Process that is currently running, or just finished running.
+     * @param Q the PriorityQueue that stores the processes that arrived at the system and are waiting to run according
+     *          to their priority.
+     * */
+    private static void completeExecution(int currTime,  Process executingProcess, PriorityQueue<Process> Q) {
+        // maximum wait time a process can wait before its priority gets updated.
+        int maxWait = 30;
         System.out.println("Process "
                 + executingProcess.getProcessId() +
                 " finished at time "
@@ -79,8 +88,7 @@ class ProcessScheduling {
         // executingDuration helps determine the time a process will keep executing
         int executingDuration = 0;
         Process executingProcess = null;
-        // maximum wait time and total wait time
-        int maxWait = 30;
+        // total wait time of all processes
         double totalWaitTime = 0;
         // PriorityQueue Q that orders its elements according to the comparator (lowest priority).
         PriorityQueue<Process> Q = new PriorityQueue<>( new ProcessComparator());
@@ -104,7 +112,7 @@ class ProcessScheduling {
                 // set running back to false, the process that was running just reached the duration of its execution
                 //and finished
                 running = false;
-                completeExecution(currTime, maxWait, executingProcess, Q);
+                completeExecution(currTime, executingProcess, Q);
 
             }
             // if no process is running and there still processes waiting in the queue,
@@ -147,12 +155,19 @@ class ProcessScheduling {
                 executingDuration--;
             }
         }
+
         //At this time all processes in D have been moved to Q
         //execute all processes that are still in Q, one at a time
         while (!Q.isEmpty()) {
+            //check if a process just finished running
             if (running && executingDuration == 0) {
-
+                // set running back to false, the process that was running just reached the duration of its execution
+                //and finished
+                running = false;
+                completeExecution(currTime, executingProcess, Q );
             }
+            
+
 
 
 
