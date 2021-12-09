@@ -47,6 +47,7 @@ class ProcessScheduling {
         boolean running = false;
         // executingDuration helps determine the time a process will keep executing
         int executingDuration = 0;
+        Process executingProcess = null;
         // maximum wait time and total wait time
         int maxWait = 30;
         int totalWaitTime = 0;
@@ -67,20 +68,45 @@ class ProcessScheduling {
                 }
             }
             if (!Q.isEmpty() && !running) {
-                Process executingProcess = Q.poll();
+                executingProcess = Q.poll();
                 int waitTime = currTime - executingProcess.getArrivalTime();
+                totalWaitTime += waitTime;
+                System.out.println("Process removed from queue is: id = "
+                        + executingProcess.getProcessId() +
+                        " , at time "
+                        + currTime +
+                        " , wait time = "
+                        + waitTime +
+                        " Total wait time = "
+                        + totalWaitTime
+                );
+
                 executingDuration = executingProcess.getDuration();
                 running = true;
-                totalWaitTime += waitTime;
+
             }
             System.out.println("executing time : " + executingDuration);
             if (running && executingDuration == 0) {
                 running = false;
+                System.out.println("Process "
+                        + executingProcess.getProcessId() +
+                        " finished at time "
+                        + currTime +
+                        "\n"
+                        );
                 // Update priorities of processes that have been waiting longer than max. wait time
+                System.out.println("Update priority: ");
                 for (Process process: Q) {
                     int waitTime = currTime - process.getArrivalTime();
                     if (waitTime > maxWait) {
                         process.setPriority(process.getPriority() - 1);
+                        System.out.println("PID = "
+                                + process.getProcessId() +
+                                " , wait time = "
+                                + waitTime +
+                                " , current priority = "
+                                + process.getPriority()
+                        );
                     }
                 }
             }
