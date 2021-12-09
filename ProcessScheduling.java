@@ -1,15 +1,16 @@
 import java.util.ArrayList;
+import java.io.File;
+import java.util.Scanner;
+import java.io.IOException;
 class ProcessScheduling {
     /**
      *
      * */
-    private static ArrayList readProcesses() {
+    private static ArrayList readProcesses() throws IOException {
         ArrayList D = new ArrayList();
         // read input file and store all process Objects in the D
         File myFile = new File("process_scheduling_input.txt");
         Scanner myReader = new Scanner(myFile);
-        // initialize an index that will be used to store process instances in D
-        int index = 0;
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
             // split the data string on the whitespace delimiter
@@ -19,13 +20,13 @@ class ProcessScheduling {
             int priority = Integer.parseInt(tokens[1].trim());
             int duration = Integer.parseInt(tokens[2].trim());
             int arrivalTime = Integer.parseInt(tokens[3].trim());
-
-            Car newCar = new Car(make, year, price);
-            cars[index] = newCar;
-            index++;
+            // create a new process instance and add it to D
+            Process newProcess = new Process(processId, priority, duration, arrivalTime);
+            D.add(newProcess);
 
         }
         myReader.close();
+        return D;
 
     }
     public static void main(String[] args) {
