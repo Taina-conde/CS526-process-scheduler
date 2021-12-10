@@ -112,7 +112,7 @@ class ProcessScheduling {
     }
     /** Simulates a simplified version of a process scheduler of a computer system.
      * @throws IOException if it cannot find the process_scheduling_input.txt file. The exception comes from calling
-     * readProcesses method.
+     * readProcesses method, or if writing to the output file process_scheduling.output.txt, an error occurs.
      * */
     public static void main(String[] args) throws IOException {
         //Read all processes from an input file and store them in an ArrayList, D
