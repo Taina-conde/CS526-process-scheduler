@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 
 class ProcessScheduling {
     /** readProcess reads the input file that stores information about all processes. It creates Process instances
@@ -48,19 +49,19 @@ class ProcessScheduling {
             int maxWait,
             Process executingProcess,
             PriorityQueue<Process> Q,
-            FileWriter myWriter) throws IOException{
-        myWriter.write("Process "
+            PrintWriter myWriter) throws IOException{
+        myWriter.println("Process "
                 + executingProcess.getProcessId() +
                 " finished at time "
                 + currTime +
                 "\n"
         );
         // Update priorities of processes that have been waiting longer than max. wait time
-        myWriter.write("Update priority: ");
+        myWriter.println("Update priority: ");
         for (Process process: Q) {
             int waitTime = currTime - process.getArrivalTime();
             if (waitTime > maxWait) {
-                myWriter.write("PID = "
+                myWriter.println("PID = "
                         + process.getProcessId() +
                         " , wait time = "
                         + waitTime +
@@ -69,7 +70,7 @@ class ProcessScheduling {
 
                 );
                 process.setPriority(process.getPriority() - 1);
-                myWriter.write("PID = "
+                myWriter.println("PID = "
                         + process.getProcessId() +
                         " , new priority = "
                         + process.getPriority()
@@ -90,9 +91,9 @@ class ProcessScheduling {
             int currTime, int waitTime,
             double totalWaitTime,
             Process executingProcess,
-            FileWriter myWriter) throws IOException {
+            PrintWriter myWriter) throws IOException {
 
-        myWriter.write("\nProcess removed from queue is: id = "
+        myWriter.println("\nProcess removed from queue is: id = "
                 + executingProcess.getProcessId() +
                 " , at time "
                 + currTime +
@@ -100,7 +101,7 @@ class ProcessScheduling {
                 + waitTime +
                 " Total wait time = "
                 + totalWaitTime);
-        myWriter.write("Process id = "
+        myWriter.println("Process id = "
                 + executingProcess.getProcessId() +
                 "\n\t\tPriority = "
                 + executingProcess.getPriority() +
@@ -134,13 +135,13 @@ class ProcessScheduling {
         PriorityQueue<Process> Q = new PriorityQueue<>( new ProcessComparator());
 
         //First, print all processes in an output file
-        FileWriter myWriter = new FileWriter("process_scheduling_output.txt");
+        PrintWriter myWriter = new PrintWriter(new FileWriter("process_scheduling_output.txt"));
         for (Process p: D) {
-            myWriter.write(p.toString());
+            myWriter.println(p.toString());
         }
 
         //print maximum wait time
-        myWriter.write("\nMaximum wait time = " + maxWait);
+        myWriter.println("\nMaximum wait time = " + maxWait);
         // Each iteration of the while loop represents what occurs during one time unit
         while(!D.isEmpty()) {
             // look in all processes stored in D
@@ -175,7 +176,7 @@ class ProcessScheduling {
                 running = true;
 
             }
-            if(D.isEmpty()) System.out.println("\nD becomes empty at time " + currTime + "\n");
+            if(D.isEmpty()) myWriter.println("\nD becomes empty at time " + currTime + "\n");
 
             // increment currTime in each iteration
             currTime++;
@@ -222,8 +223,8 @@ class ProcessScheduling {
             completeExecution(currTime, maxWait, executingProcess, Q, myWriter);
         }
         double averageWaitTime = totalWaitTime/numProcesses;
-        myWriter.write("\nTotal wait time = " + totalWaitTime);
-        myWriter.write("Average wait time = " + averageWaitTime);
+        myWriter.println("\nTotal wait time = " + totalWaitTime);
+        myWriter.println("Average wait time = " + averageWaitTime);
 
         //close output file
         myWriter.close();
